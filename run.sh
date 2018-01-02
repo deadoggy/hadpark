@@ -58,4 +58,3 @@ docker run -tid --net hadoopnetwork --ip 192.168.0.3 hadoop_slave  /bin/bash
 docker run -tid --net hadoopnetwork --ip 192.168.0.4 hadoop_slave  /bin/bash
 
 #modify hosts file
-
