@@ -11,4 +11,7 @@
     3. spark in master
 ## Todo
     1. change master hosts in run.sh
-    2. change slave hosts in Dockerfile 
+    2. change slave hosts in Dockerfile
+    3. add config in master
+    4. run hadoop
+    5. config spark 
