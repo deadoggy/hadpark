@@ -46,15 +46,22 @@ cp Dockerfile /cluster/
 #copy pubkey
 cp $HOME/.ssh/id_rsa.pub /cluster/id_rsa.pub
 
+#copy user info
+cp user /cluster/
+
 #create a docker network
 docker network create --subnet 192.168.0.0/16 hadoopnetwork
 
 #build docker image
 docker build -t hadoop_slave .
 
+#modify hosts file in master
+sudo sed "1i\192.168.0.2 slave1" /etc/hosts
+sudo sed "1i\192.168.0.3 slave2" /etc/hosts
+sudo sed "1i\192.168.0.4 slave3" /etc/hosts
+
 #run docker container
 docker run -tid --net hadoopnetwork --ip 192.168.0.2 hadoop_slave  /bin/bash
 docker run -tid --net hadoopnetwork --ip 192.168.0.3 hadoop_slave  /bin/bash
 docker run -tid --net hadoopnetwork --ip 192.168.0.4 hadoop_slave  /bin/bash
 
-#modify hosts file
