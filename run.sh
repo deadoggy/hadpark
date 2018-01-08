@@ -64,9 +64,9 @@ sudo sed -i  '$a192.168.0.5 slave2' /etc/hosts
 sudo sed -i  '$a192.168.0.6 slave3' /etc/hosts
 
 #run docker container
-docker run -tid --net hadoopnetwork --ip 192.168.0.4  --add-host master:192.168.0.1 hadoop_slave /bin/bash
-docker run -tid --net hadoopnetwork --ip 192.168.0.5  --add-host master:192.168.0.1 hadoop_slave /bin/bash
-docker run -tid --net hadoopnetwork --ip 192.168.0.6  --add-host master:192.168.0.1 hadoop_slave /bin/bash
+docker run -tid --net hadoopnetwork --ip 192.168.0.4  --add-host master:192.168.0.1 hadoop_slave 
+docker run -tid --net hadoopnetwork --ip 192.168.0.5  --add-host master:192.168.0.1 hadoop_slave 
+docker run -tid --net hadoopnetwork --ip 192.168.0.6  --add-host master:192.168.0.1 hadoop_slave 
 
 #TODO: modify slaves and other configure files in hadoop
 #TODO: startup hadoop namenode

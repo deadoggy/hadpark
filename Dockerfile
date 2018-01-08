@@ -30,8 +30,9 @@ RUN mkdir /var/run/sshd
 
 #CHANGE USER AND START SSH
 ADD id_rsa.pub /home/hadoop/.ssh/authorized_keys
-RUN chmod 777 /home/hadoop/.ssh/authorized_keys
-RUN chown hadoop home/hadoop/.ssh/authorized_keys
-USER hadoop
-CMD /usr/sbin/sshd -D &
+RUN chmod 700 /home/hadoop/.ssh/authorized_keys
+RUN chown -R  hadoop:hadoop /home/hadoop
+RUN sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
+RUN sed -i '$aPasswordAuthentication no' /etc/ssh/sshd_config
+CMD ["/usr/sbin/sshd", "-D"]
 

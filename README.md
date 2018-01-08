@@ -10,8 +10,13 @@
     2. 1 namenode in master
     3. spark in master
 ## Todo
-    1. change master hosts in run.sh
-    2. change slave hosts in Dockerfile
-    3. add config in master
-    4. run hadoop
-    5. config spark 
+    1. add config in master
+    2. run hadoop
+    3. config spark 
+## Experience
+    1. when config sshd without pw in slave, should change config file /etc/ssh/sshd_config as followings:
+        > UsePAM no
+        > PasswordAuthentication no
+    2. As it hasn't been explicitly mentioned, sshd is by default very strict on permissions on for the authorized_keys files. So, if authorized_keys is writable for anybody other than the user or can be made writable by anybody other than the user, it'll refuse to authenticate (unless sshd is configured with StrictModes no)
+
+    3. docker run ... /bin/bash will override CMD ... in Dockerfile
