@@ -2,6 +2,8 @@
 
 slave_size=$1
 
+delete_file=$2
+
 if [[ $slave_size -eq '' ]]; then
     echo "Size of slaves not specified; quit"
     exit
@@ -47,3 +49,7 @@ echo "Delete Env"
 echo "======================================"
 sudo sed -i "/HADOOP_CONF_DIR=/d" /etc/profile
 source /etc/profile
+
+if [[ delete_file -eq '-d' ]]; then
+    sudo rm -rf /cluster
+fi

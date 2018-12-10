@@ -9,15 +9,16 @@ RUN chmod a+w /cluster
 # COPY FILE AND SET SSH
 RUN mkdir /cluster/hadoop
 ADD hadoop /cluster/hadoop/
+RUN chmod -R 777 /cluster
 RUN apt-get update
 RUN apt-get -y  install openssh-server sudo
 
 # ENV
 RUN mkdir /lib/java
-ADD java /lib/java
-ENV JAVA_HOME /lib/java
-ENV CLASSPATH /lib/java/lib/
-ENV PATH /lib/java/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ADD java $JAVA_HOME
+# ENV JAVA_HOME /lib/java
+# ENV CLASSPATH /lib/java/lib/
+# ENV PATH /lib/java/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # PORT
 EXPOSE 50010 50075 50475 50020 22

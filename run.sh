@@ -14,7 +14,7 @@ if [[ -z $JAVA_HOME ]]; then
 echo 'No java found! exit'
 exit
 else
-echo 'Java home:'$JAVA_HOME
+echo 'JAVA_HOME:'$JAVA_HOME
 fi
 
 #prepare file 
@@ -30,8 +30,9 @@ if [[ `ls /cluster | grep Dockerfile` -eq '' ]]; then
     cp Dockerfile /cluster/
 fi
 #copy pubkey
-if [[ `ls /cluster | grep id_rsa.pub` -eq '' ]]; then
-    cp $HOME/.ssh/id_rsa.pub /cluster/id_rsa.pub
+if [[ `ls /cluster | grep id_rsa` == '' ]]; then
+    echo "copy pub key"
+    cp ''$HOME'/.ssh/id_rsa.pub' '/cluster/id_rsa.pub'
 fi
 
 #copy user info
@@ -41,14 +42,14 @@ fi
 
 #downloading hadoop and spark
 
-if [[ `ls /cluster | grep hadoop` -eq '' ]]; then
+if [[ `ls /cluster | grep hadoop` == '' ]]; then
     cd /cluster
     echo downloading hadoop...
-    wget -q  http://mirrors.hust.edu.cn/apache/hadoop/common/hadoop-2.9.2/hadoop-2.9.2.tar.gz
+    wget -q  'http://mirrors.hust.edu.cn/apache/hadoop/common/hadoop-2.9.2/hadoop-2.9.2.tar.gz'
     echo done
     echo decompressing...
-    tar -xzf hadoop-2.9.2.tar.gz
-    mv hadoop-2.9.2 hadoop
+    tar -xzf 'hadoop-2.9.2.tar.gz'
+    mv 'hadoop-2.9.2' hadoop
     #rm hadoop-2.9.2.tar.gz
     echo done
 fi
@@ -71,8 +72,8 @@ sudo sed -i '$aexport HADOOP_CONF_DIR=/cluster/hadoop/etc/hadoop' /etc/profile
 source /etc/profile
 cd /cluster
 
-sed -i "/export JAVA_HOME=$JAVA_HOME/d" /cluster/hadoop/etc/hadoop/hadoop-env.sh
-echo "export JAVA_HOME=$JAVA_HOME" >> /cluster/hadoop/etc/hadoop/hadoop-env.sh
+sudo sed -i '/JAVA_HOME/d' /cluster/hadoop/etc/hadoop/hadoop-env.sh
+sudo sed -i '$aexport JAVA_HOME='$JAVA_HOME'' /cluster/hadoop/etc/hadoop/hadoop-env.sh
 
 sudo cp -r $JAVA_HOME java
 echo done
@@ -118,10 +119,10 @@ for((i=1;i<=$slave_size;i++))
 # sudo docker run -tid --rm --net hadoopnetwork --ip 192.168.0.7  --add-host master:192.168.0.1 hadoop_slave  --name slave4
 
 #TODO: modify slaves and other configure files in hadoop
-sed -i "/localhost/d" $HADOOP_CONF_DIR/slaves
-sed -i "/slave/d" $HADOOP_CONF_DIR/slaves
+sudo sed -i "/localhost/d" $HADOOP_CONF_DIR/slaves
+sudo sed -i "/slave/d" $HADOOP_CONF_DIR/slaves
 for((i=1;i<=$slave_size;i++))
 {
-    echo slave$i >> $HADOOP_CONF_DIR/slaves
+    sudo echo slave$i >> $HADOOP_CONF_DIR/slaves
 }
 #TODO: startup hadoop namenode
