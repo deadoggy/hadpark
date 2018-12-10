@@ -1,6 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER deadoggy
 
+
 # BASE DIR
 RUN mkdir /cluster
 RUN chmod a+w /cluster
